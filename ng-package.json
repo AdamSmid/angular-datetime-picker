@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "dist/@workbox/datetime-picker",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "assets": [
+    "LICENSE",
+    "README.md",
+    "MIGRATION-V2.md",
+    "demo_datetime_picker.png"
+  ]
+}

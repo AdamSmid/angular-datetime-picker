@@ -1,0 +1,71 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "defaultProject": "mat-datetime-picker",
+  "projects": {
+    "mat-datetime-picker": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "library",
+      "prefix": "NgxMat",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "tsconfig.lib.json",
+            "project": "ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "mat",
+      "style": "scss",
+      "skipTests": true,
+      "standalone": true,
+      "changeDetection": "OnPush",
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "ngx-mat",
+      "skipTests": true,
+      "type": "directive"
+    },
+    "@schematics/angular:pipe": {
+      "prefix": "ngx-mat",
+      "skipTests": true,
+      "typeSeparator": "."
+    },
+    "@schematics/angular:service": {
+      "skipTests": true,
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    }
+  },
+  "cli": {
+    "analytics": false,
+    "packageManager": "pnpm"
+  }
+}

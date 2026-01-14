@@ -1,0 +1,36 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "declaration": false,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es5",
+      "es2015",
+      "dom"
+    ],
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@workbox/datetime-picker": [
+        "dist/@workbox/datetime-picker"
+      ],
+      "@workbox/datetime-picker/*": [
+        "dist/@workbox/datetime-picker/*"
+      ]
+    },
+    "useDefineForClassFields": false,
+    "skipLibCheck": true
+  }
+}
