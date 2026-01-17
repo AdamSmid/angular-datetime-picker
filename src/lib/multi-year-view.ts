@@ -28,12 +28,12 @@ import { DateAdapter } from '@angular/material/core';
 import { Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import {
-  NgxMatCalendarBody,
-  NgxMatCalendarCell,
-  NgxMatCalendarCellClassFunction,
-  NgxMatCalendarUserEvent,
+  AdMatCalendarBody,
+  AdMatCalendarCell,
+  AdMatCalendarCellClassFunction,
+  AdMatCalendarUserEvent,
 } from './calendar-body';
-import { NgxDateRange } from './date-selection-model';
+import { AdDateRange } from './date-selection-model';
 import { createMissingDateImplError } from './datepicker-errors';
 
 export const yearsPerPage = 24;
@@ -45,14 +45,14 @@ export const yearsPerRow = 4;
  * @docs-private
  */
 @Component({
-  selector: 'ngx-mat-multi-year-view',
+  selector: 'ad-mat-multi-year-view',
   templateUrl: 'multi-year-view.html',
-  exportAs: 'ngxMatMultiYearView',
+  exportAs: 'adMatMultiYearView',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgxMatCalendarBody],
+  imports: [AdMatCalendarBody],
 })
-export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
+export class AdMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   private _rerenderSubscription = Subscription.EMPTY;
 
   /** Flag used to filter out space/enter keyup events that originated outside of the view. */
@@ -86,11 +86,11 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
 
   /** The currently selected date. */
   @Input()
-  get selected(): NgxDateRange<D> | D | null {
+  get selected(): AdDateRange<D> | D | null {
     return this._selected;
   }
-  set selected(value: NgxDateRange<D> | D | null) {
-    if (value instanceof NgxDateRange) {
+  set selected(value: AdDateRange<D> | D | null) {
+    if (value instanceof AdDateRange) {
       this._selected = value;
     } else {
       this._selected = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(value));
@@ -98,7 +98,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
 
     this._setSelectedYear(value);
   }
-  private _selected: NgxDateRange<D> | D | null;
+  private _selected: AdDateRange<D> | D | null;
 
   /** The minimum selectable date. */
   @Input()
@@ -124,7 +124,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   dateFilter = input<(date: D) => boolean>();
 
   /** Function that can be used to add custom CSS classes to date cells. */
-  dateClass = input<NgxMatCalendarCellClassFunction<D>>();
+  dateClass = input<AdMatCalendarCellClassFunction<D>>();
 
   /** Emits when a new year is selected. */
   readonly selectedChange = output<D>();
@@ -136,10 +136,10 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   readonly activeDateChange = output<D>();
 
   /** The body of calendar table */
-  _matCalendarBody = viewChild(NgxMatCalendarBody);
+  _matCalendarBody = viewChild(AdMatCalendarBody);
 
   /** Grid of calendar cells representing the currently displayed years. */
-  _years: NgxMatCalendarCell[][];
+  _years: AdMatCalendarCell[][];
 
   /** The year that today falls on. */
   _todayYear: number;
@@ -195,7 +195,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   }
 
   /** Handles when a new year is selected. */
-  _yearSelected(event: NgxMatCalendarUserEvent<number>) {
+  _yearSelected(event: AdMatCalendarUserEvent<number>) {
     const year = event.value;
     const selectedYear = this._dateAdapter.createDate(year, 0, 1);
     const selectedDate = this._getDateFromYear(year);
@@ -214,7 +214,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
    * parent's value asynchronously via the `activeDateChange` event. The child component receives an
    * updated value asynchronously via the `activeCell` Input.
    */
-  _updateActiveDate(event: NgxMatCalendarUserEvent<number>) {
+  _updateActiveDate(event: AdMatCalendarUserEvent<number>) {
     const year = event.value;
     const oldActiveDate = this._activeDate;
 
@@ -340,7 +340,7 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
     const yearName = this._dateAdapter.getYearName(date);
     const cellClasses = this.dateClass() ? this.dateClass()!(date, 'multi-year') : undefined;
 
-    return new NgxMatCalendarCell(
+    return new AdMatCalendarCell(
       year,
       yearName,
       yearName,
@@ -388,10 +388,10 @@ export class NgxMatMultiYearView<D> implements AfterContentInit, OnDestroy {
   }
 
   /** Sets the currently-highlighted year based on a model value. */
-  private _setSelectedYear(value: NgxDateRange<D> | D | null) {
+  private _setSelectedYear(value: AdDateRange<D> | D | null) {
     this._selectedYear = null;
 
-    if (value instanceof NgxDateRange) {
+    if (value instanceof AdDateRange) {
       const displayValue = value.start || value.end;
 
       if (displayValue) {

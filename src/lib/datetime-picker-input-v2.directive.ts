@@ -26,28 +26,28 @@ import {
 import { DateAdapter, MAT_DATE_FORMATS, ThemePalette } from '@angular/material/core';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription } from 'rxjs';
-import { NgxMatDatepickerControl } from './datepicker-base';
+import { AdMatDatepickerControl } from './datepicker-base';
 import { createMissingDateImplError } from './datepicker-errors';
-import { NgxMatDatetimePickerV2 } from './datetime-picker-v2.component';
+import { AdMatDatetimePickerV2 } from './datetime-picker-v2.component';
 
-export const NGX_MAT_DATETIME_PICKER_VALUE_ACCESSOR: any = {
+export const AD_MAT_DATETIME_PICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => NgxMatDatetimePickerInputV2),
+  useExisting: forwardRef(() => AdMatDatetimePickerInputV2),
   multi: true,
 };
 
-export const NGX_MAT_DATETIME_PICKER_VALIDATORS: any = {
+export const AD_MAT_DATETIME_PICKER_VALIDATORS: any = {
   provide: NG_VALIDATORS,
-  useExisting: forwardRef(() => NgxMatDatetimePickerInputV2),
+  useExisting: forwardRef(() => AdMatDatetimePickerInputV2),
   multi: true,
 };
 
 @Directive({
-  selector: 'input[ngxMatDatetimePicker]',
+  selector: 'input[adMatDatetimePicker]',
   providers: [
-    NGX_MAT_DATETIME_PICKER_VALUE_ACCESSOR,
-    NGX_MAT_DATETIME_PICKER_VALIDATORS,
-    { provide: MatFormFieldControl, useExisting: NgxMatDatetimePickerInputV2 },
+    AD_MAT_DATETIME_PICKER_VALUE_ACCESSOR,
+    AD_MAT_DATETIME_PICKER_VALIDATORS,
+    { provide: MatFormFieldControl, useExisting: AdMatDatetimePickerInputV2 },
   ],
   host: {
     class: 'mat-datetime-picker-input',
@@ -64,14 +64,14 @@ export const NGX_MAT_DATETIME_PICKER_VALIDATORS: any = {
     '(click)': '_onClick($event)',
   },
 })
-export class NgxMatDatetimePickerInputV2<D>
+export class AdMatDatetimePickerInputV2<D>
   implements
     MatFormFieldControl<D>,
     ControlValueAccessor,
     OnDestroy,
     OnInit,
     Validator,
-    NgxMatDatepickerControl<D>
+    AdMatDatepickerControl<D>
 {
   private readonly _elementRef = inject<ElementRef<HTMLInputElement>>(ElementRef);
   private readonly _dateAdapter = inject(DateAdapter<D>, { optional: true });
@@ -81,7 +81,7 @@ export class NgxMatDatetimePickerInputV2<D>
   // Reference to NgControl - will be set manually to avoid circular dependency
   public ngControl: NgControl | null = null;
 
-  @Input() ngxMatDatetimePicker: NgxMatDatetimePickerV2<D>;
+  @Input() adMatDatetimePicker: AdMatDatetimePickerV2<D>;
 
   /** The value of the input. */
   @Input()
@@ -149,13 +149,13 @@ export class NgxMatDatetimePickerInputV2<D>
   private readonly _disabled = signal<boolean>(false);
 
   /** Emits when a `change` event is fired on this `<input>`. */
-  @Output() readonly dateChange: EventEmitter<NgxMatDatetimePickerInputEvent<D>> = new EventEmitter<
-    NgxMatDatetimePickerInputEvent<D>
+  @Output() readonly dateChange: EventEmitter<AdMatDatetimePickerInputEvent<D>> = new EventEmitter<
+    AdMatDatetimePickerInputEvent<D>
   >();
 
   /** Emits when an `input` event is fired on this `<input>`. */
-  @Output() readonly dateInput: EventEmitter<NgxMatDatetimePickerInputEvent<D>> = new EventEmitter<
-    NgxMatDatetimePickerInputEvent<D>
+  @Output() readonly dateInput: EventEmitter<AdMatDatetimePickerInputEvent<D>> = new EventEmitter<
+    AdMatDatetimePickerInputEvent<D>
   >();
 
   /** Emits when the internal state has changed */
@@ -172,7 +172,7 @@ export class NgxMatDatetimePickerInputV2<D>
   private _parseValidator: ValidatorFn = (): ValidationErrors | null => {
     return this._lastValueValid
       ? null
-      : { ngxMatDatetimePickerParse: { text: this._elementRef.nativeElement.value } };
+      : { adMatDatetimePickerParse: { text: this._elementRef.nativeElement.value } };
   };
 
   /** The form control validator for the date filter. */
@@ -182,7 +182,7 @@ export class NgxMatDatetimePickerInputV2<D>
     );
     return !controlValue || this._matchesFilter(controlValue)
       ? null
-      : { ngxMatDatetimePickerFilter: true };
+      : { adMatDatetimePickerFilter: true };
   };
 
   /** The form control validator for the min date. */
@@ -193,7 +193,7 @@ export class NgxMatDatetimePickerInputV2<D>
     const min = this.min;
     return !min || !controlValue || this._dateAdapter!.compareDate(min, controlValue) <= 0
       ? null
-      : { ngxMatDatetimePickerMin: { min: min, actual: controlValue } };
+      : { adMatDatetimePickerMin: { min: min, actual: controlValue } };
   };
 
   /** The form control validator for the max date. */
@@ -204,7 +204,7 @@ export class NgxMatDatetimePickerInputV2<D>
     const max = this.max;
     return !max || !controlValue || this._dateAdapter!.compareDate(max, controlValue) >= 0
       ? null
-      : { ngxMatDatetimePickerMax: { max: max, actual: controlValue } };
+      : { adMatDatetimePickerMax: { max: max, actual: controlValue } };
   };
 
   /** Gets the base validator functions. */
@@ -261,7 +261,7 @@ export class NgxMatDatetimePickerInputV2<D>
       throw createMissingDateImplError('DateAdapter');
     }
     if (!this._dateFormats) {
-      throw createMissingDateImplError('NGX_MAT_DATE_FORMATS');
+      throw createMissingDateImplError('AD_MAT_DATE_FORMATS');
     }
 
     // Update the displayed date when the locale changes.
@@ -273,15 +273,15 @@ export class NgxMatDatetimePickerInputV2<D>
   private readonly _injector = inject(Injector);
 
   ngOnInit(): void {
-    console.log('🔧 NgxMatDatetimePickerInputV2 ngOnInit called');
+    console.log('🔧 AdMatDatetimePickerInputV2 ngOnInit called');
 
     // Manually get NgControl to avoid circular dependency
     this.ngControl = this._injector.get(NgControl, null, { optional: true, self: true });
     console.log('🔧 NgControl found:', !!this.ngControl, this.ngControl?.constructor?.name);
 
-    if (this.ngxMatDatetimePicker) {
+    if (this.adMatDatetimePicker) {
       console.log('🔧 Registering input with datepicker');
-      this.ngxMatDatetimePicker._registerInput(this);
+      this.adMatDatetimePicker._registerInput(this);
     } else {
       console.log('❌ No datepicker available for registration');
     }
@@ -324,8 +324,8 @@ export class NgxMatDatetimePickerInputV2<D>
   _onKeydown(event: KeyboardEvent): void {
     const isAltDownArrow = event.altKey && event.keyCode === 40; // DOWN_ARROW
 
-    if (this.ngxMatDatetimePicker && isAltDownArrow && !this._elementRef.nativeElement.readOnly) {
-      this.ngxMatDatetimePicker.open();
+    if (this.adMatDatetimePicker && isAltDownArrow && !this._elementRef.nativeElement.readOnly) {
+      this.adMatDatetimePicker.open();
       event.preventDefault();
     }
   }
@@ -342,11 +342,11 @@ export class NgxMatDatetimePickerInputV2<D>
     this._cvaOnChange(date);
 
     // Emit input event
-    this.dateInput.emit(new NgxMatDatetimePickerInputEvent(this, this._elementRef.nativeElement));
+    this.dateInput.emit(new AdMatDatetimePickerInputEvent(this, this._elementRef.nativeElement));
   }
 
   _onChange(): void {
-    this.dateChange.emit(new NgxMatDatetimePickerInputEvent(this, this._elementRef.nativeElement));
+    this.dateChange.emit(new AdMatDatetimePickerInputEvent(this, this._elementRef.nativeElement));
   }
 
   _onBlur(): void {
@@ -361,8 +361,8 @@ export class NgxMatDatetimePickerInputV2<D>
 
   _onClick(event: MouseEvent): void {
     // Open the datepicker when clicking on the input
-    if (this.ngxMatDatetimePicker && !this.disabled) {
-      this.ngxMatDatetimePicker.open();
+    if (this.adMatDatetimePicker && !this.disabled) {
+      this.adMatDatetimePicker.open();
     }
   }
 
@@ -400,7 +400,7 @@ export class NgxMatDatetimePickerInputV2<D>
     }
 
     // Emit our own change events
-    this.dateChange.emit(new NgxMatDatetimePickerInputEvent(this, this._elementRef.nativeElement));
+    this.dateChange.emit(new AdMatDatetimePickerInputEvent(this, this._elementRef.nativeElement));
 
     // Mark as touched
     if (this._onTouched) {
@@ -437,7 +437,7 @@ export class NgxMatDatetimePickerInputV2<D>
     return this._formField?.getConnectedOverlayOrigin() || this._elementRef;
   }
 
-  /** Implementation of NgxMatDatepickerControl interface methods */
+  /** Implementation of AdMatDatepickerControl interface methods */
   getStartValue(): D | null {
     return this.value;
   }
@@ -452,13 +452,13 @@ export class NgxMatDatetimePickerInputV2<D>
 }
 
 /** An event used for datepicker input and change events. */
-export class NgxMatDatetimePickerInputEvent<D> {
+export class AdMatDatetimePickerInputEvent<D> {
   /** The new value for the target datepicker input. */
   value: D | null;
 
   constructor(
     /** Reference to the datepicker input component that emitted the event. */
-    public target: NgxMatDatetimePickerInputV2<D>,
+    public target: AdMatDatetimePickerInputV2<D>,
     /** Reference to the native input element that the event originated from. */
     public targetElement: HTMLElement,
   ) {

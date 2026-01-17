@@ -16,32 +16,32 @@ import {
 import { take } from 'rxjs/operators';
 
 /** Extra CSS classes that can be associated with a calendar cell. */
-export type NgxMatCalendarCellCssClasses = string | string[] | Set<string> | { [key: string]: any };
+export type AdMatCalendarCellCssClasses = string | string[] | Set<string> | { [key: string]: any };
 
 /** Function that can generate the extra classes that should be added to a calendar cell. */
-export type NgxMatCalendarCellClassFunction<D> = (
+export type AdMatCalendarCellClassFunction<D> = (
   date: D,
   view: 'month' | 'year' | 'multi-year',
-) => NgxMatCalendarCellCssClasses;
+) => AdMatCalendarCellCssClasses;
 
 /**
  * An internal class that represents the data corresponding to a single calendar cell.
  * @docs-private
  */
-export class NgxMatCalendarCell<D = any> {
+export class AdMatCalendarCell<D = any> {
   constructor(
     public value: number,
     public displayValue: string,
     public ariaLabel: string,
     public enabled: boolean,
-    public cssClasses: NgxMatCalendarCellCssClasses = {},
+    public cssClasses: AdMatCalendarCellCssClasses = {},
     public compareValue = value,
     public rawValue?: D,
   ) {}
 }
 
 /** Event emitted when a date inside the calendar is triggered as a result of a user action. */
-export interface NgxMatCalendarUserEvent<D> {
+export interface AdMatCalendarUserEvent<D> {
   value: D;
   event: Event;
 }
@@ -49,18 +49,18 @@ export interface NgxMatCalendarUserEvent<D> {
 let calendarBodyId = 1;
 
 @Component({
-  selector: '[ngx-mat-calendar-body]',
+  selector: '[ad-mat-calendar-body]',
   templateUrl: 'calendar-body.html',
   styleUrls: ['calendar-body.scss'],
   host: {
-    class: 'ngx-mat-calendar-body',
+    class: 'ad-mat-calendar-body',
   },
   exportAs: 'matCalendarBody',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgClass],
 })
-export class NgxMatCalendarBody<D = any> implements OnDestroy, AfterViewChecked {
+export class AdMatCalendarBody<D = any> implements OnDestroy, AfterViewChecked {
   private _platform = inject(Platform);
 
   /**
@@ -78,7 +78,7 @@ export class NgxMatCalendarBody<D = any> implements OnDestroy, AfterViewChecked 
   label = input<string>();
 
   /** The cells to display in the table. */
-  rows = input<NgxMatCalendarCell[][]>();
+  rows = input<AdMatCalendarCell[][]>();
 
   /** The value in the table that corresponds to today. */
   todayValue = input<number>();
@@ -133,18 +133,18 @@ export class NgxMatCalendarBody<D = any> implements OnDestroy, AfterViewChecked 
   endDateAccessibleName = input<string | null>();
 
   /** Emits when a new value is selected. */
-  readonly selectedValueChange = output<NgxMatCalendarUserEvent<number>>();
+  readonly selectedValueChange = output<AdMatCalendarUserEvent<number>>();
 
   /** Emits when the preview has changed as a result of a user action. */
-  readonly previewChange = output<NgxMatCalendarUserEvent<NgxMatCalendarCell | null>>();
+  readonly previewChange = output<AdMatCalendarUserEvent<AdMatCalendarCell | null>>();
 
-  readonly activeDateChange = output<NgxMatCalendarUserEvent<number>>();
+  readonly activeDateChange = output<AdMatCalendarUserEvent<number>>();
 
   /** Emits the date at the possible start of a drag event. */
-  readonly dragStarted = output<NgxMatCalendarUserEvent<D>>();
+  readonly dragStarted = output<AdMatCalendarUserEvent<D>>();
 
   /** Emits the date at the conclusion of a drag, or null if mouse was not released on a date. */
-  readonly dragEnded = output<NgxMatCalendarUserEvent<D | null>>();
+  readonly dragEnded = output<AdMatCalendarUserEvent<D | null>>();
 
   /** The number of blank cells to put at the beginning for the first row. */
   _firstRowOffset = computed(() => {
@@ -191,7 +191,7 @@ export class NgxMatCalendarBody<D = any> implements OnDestroy, AfterViewChecked 
   }
 
   /** Called when a cell is clicked. */
-  _cellClicked(cell: NgxMatCalendarCell, event: MouseEvent): void {
+  _cellClicked(cell: AdMatCalendarCell, event: MouseEvent): void {
     // Ignore "clicks" that are actually canceled drags (eg the user dragged
     // off and then went back to this cell to undo).
     if (this._didDragSinceMouseDown) {
@@ -203,7 +203,7 @@ export class NgxMatCalendarBody<D = any> implements OnDestroy, AfterViewChecked 
     }
   }
 
-  _emitActiveDateChange(cell: NgxMatCalendarCell, event: FocusEvent): void {
+  _emitActiveDateChange(cell: AdMatCalendarCell, event: FocusEvent): void {
     if (cell.enabled) {
       this.activeDateChange.emit({ value: cell.value, event });
     }
@@ -293,7 +293,7 @@ export class NgxMatCalendarBody<D = any> implements OnDestroy, AfterViewChecked 
       return false;
     }
 
-    let previousCell: NgxMatCalendarCell | undefined = this.rows()[rowIndex][colIndex - 1];
+    let previousCell: AdMatCalendarCell | undefined = this.rows()[rowIndex][colIndex - 1];
 
     if (!previousCell) {
       const previousRow = this.rows()[rowIndex - 1];
@@ -309,7 +309,7 @@ export class NgxMatCalendarBody<D = any> implements OnDestroy, AfterViewChecked 
       return false;
     }
 
-    let nextCell: NgxMatCalendarCell | undefined = this.rows()[rowIndex][colIndex + 1];
+    let nextCell: AdMatCalendarCell | undefined = this.rows()[rowIndex][colIndex + 1];
 
     if (!nextCell) {
       const nextRow = this.rows()[rowIndex + 1];
@@ -491,7 +491,7 @@ export class NgxMatCalendarBody<D = any> implements OnDestroy, AfterViewChecked 
   };
 
   /** Finds the MatCalendarCell that corresponds to a DOM node. */
-  private _getCellFromElement(element: HTMLElement): NgxMatCalendarCell | null {
+  private _getCellFromElement(element: HTMLElement): AdMatCalendarCell | null {
     const cell = getCellElement(element);
 
     if (cell) {

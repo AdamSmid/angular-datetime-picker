@@ -1,14 +1,14 @@
 import { FactoryProvider, Injectable, InjectionToken, Optional, SkipSelf } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
-import { NgxDateRange } from './date-selection-model';
+import { AdDateRange } from './date-selection-model';
 
 /** Injection token used to customize the date range selection behavior. */
-export const NGX_MAT_DATE_RANGE_SELECTION_STRATEGY = new InjectionToken<
-  NgxMatDateRangeSelectionStrategy<any>
->('NGX_MAT_DATE_RANGE_SELECTION_STRATEGY');
+export const AD_MAT_DATE_RANGE_SELECTION_STRATEGY = new InjectionToken<
+  AdMatDateRangeSelectionStrategy<any>
+>('AD_MAT_DATE_RANGE_SELECTION_STRATEGY');
 
 /** Object that can be provided in order to customize the date range selection behavior. */
-export interface NgxMatDateRangeSelectionStrategy<D> {
+export interface AdMatDateRangeSelectionStrategy<D> {
   /**
    * Called when the user has finished selecting a value.
    * @param date Date that was selected. Will be null if the user cleared the selection.
@@ -16,7 +16,7 @@ export interface NgxMatDateRangeSelectionStrategy<D> {
    * @param event DOM event that triggered the selection. Currently only corresponds to a `click`
    *    event, but it may get expanded in the future.
    */
-  selectionFinished(date: D | null, currentRange: NgxDateRange<D>, event: Event): NgxDateRange<D>;
+  selectionFinished(date: D | null, currentRange: AdDateRange<D>, event: Event): AdDateRange<D>;
 
   /**
    * Called when the user has activated a new date (e.g. by hovering over
@@ -28,7 +28,7 @@ export interface NgxMatDateRangeSelectionStrategy<D> {
    * @param event DOM event that caused the preview to be changed. Will be either a
    *    `mouseenter`/`mouseleave` or `focus`/`blur` depending on how the user is navigating.
    */
-  createPreview(activeDate: D | null, currentRange: NgxDateRange<D>, event: Event): NgxDateRange<D>;
+  createPreview(activeDate: D | null, currentRange: AdDateRange<D>, event: Event): AdDateRange<D>;
 
   /**
    * Called when the user has dragged a date in the currently selected range to another
@@ -42,18 +42,18 @@ export interface NgxMatDateRangeSelectionStrategy<D> {
    */
   createDrag?(
     dragOrigin: D,
-    originalRange: NgxDateRange<D>,
+    originalRange: AdDateRange<D>,
     newDate: D,
     event: Event,
-  ): NgxDateRange<D> | null;
+  ): AdDateRange<D> | null;
 }
 
 /** Provides the default date range selection behavior. */
 @Injectable()
-export class DefaultNgxMatCalendarRangeStrategy<D> implements NgxMatDateRangeSelectionStrategy<D> {
+export class DefaultAdMatCalendarRangeStrategy<D> implements AdMatDateRangeSelectionStrategy<D> {
   constructor(private _dateAdapter: DateAdapter<D>) {}
 
-  selectionFinished(date: D, currentRange: NgxDateRange<D>) {
+  selectionFinished(date: D, currentRange: AdDateRange<D>) {
     let { start, end } = currentRange;
 
     if (start == null) {
@@ -65,10 +65,10 @@ export class DefaultNgxMatCalendarRangeStrategy<D> implements NgxMatDateRangeSel
       end = null;
     }
 
-    return new NgxDateRange<D>(start, end);
+    return new AdDateRange<D>(start, end);
   }
 
-  createPreview(activeDate: D | null, currentRange: NgxDateRange<D>) {
+  createPreview(activeDate: D | null, currentRange: AdDateRange<D>) {
     let start: D | null = null;
     let end: D | null = null;
 
@@ -77,10 +77,10 @@ export class DefaultNgxMatCalendarRangeStrategy<D> implements NgxMatDateRangeSel
       end = activeDate;
     }
 
-    return new NgxDateRange<D>(start, end);
+    return new AdDateRange<D>(start, end);
   }
 
-  createDrag(dragOrigin: D, originalRange: NgxDateRange<D>, newDate: D) {
+  createDrag(dragOrigin: D, originalRange: AdDateRange<D>, newDate: D) {
     let start = originalRange.start;
     let end = originalRange.end;
 
@@ -119,20 +119,20 @@ export class DefaultNgxMatCalendarRangeStrategy<D> implements NgxMatDateRangeSel
       end = adapter.addCalendarDays(end, diffDays);
     }
 
-    return new NgxDateRange<D>(start, end);
+    return new AdDateRange<D>(start, end);
   }
 }
 
 /** @docs-private */
-export function NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(
-  parent: NgxMatDateRangeSelectionStrategy<unknown>,
+export function AD_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY(
+  parent: AdMatDateRangeSelectionStrategy<unknown>,
   adapter: DateAdapter<unknown>,
 ) {
-  return parent || new DefaultNgxMatCalendarRangeStrategy(adapter);
+  return parent || new DefaultAdMatCalendarRangeStrategy(adapter);
 }
 
-export const NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER: FactoryProvider = {
-  provide: NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
-  deps: [[new Optional(), new SkipSelf(), NGX_MAT_DATE_RANGE_SELECTION_STRATEGY], DateAdapter],
-  useFactory: NGX_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY,
+export const AD_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER: FactoryProvider = {
+  provide: AD_MAT_DATE_RANGE_SELECTION_STRATEGY,
+  deps: [[new Optional(), new SkipSelf(), AD_MAT_DATE_RANGE_SELECTION_STRATEGY], DateAdapter],
+  useFactory: AD_MAT_CALENDAR_RANGE_STRATEGY_PROVIDER_FACTORY,
 };

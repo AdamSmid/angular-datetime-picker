@@ -16,17 +16,17 @@ import {
 } from '@angular/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { Observable, Subscription, merge, of as observableOf } from 'rxjs';
-import { NgxMatDatepickerControl, NgxMatDatepickerPanel } from './datepicker-base';
-import { NgxMatDatepickerIntl } from './datepicker-intl';
+import { AdMatDatepickerControl, AdMatDatepickerPanel } from './datepicker-base';
+import { AdMatDatepickerIntl } from './datepicker-intl';
 
 /** Can be used to override the icon of a `matDatepickerToggle`. */
 @Directive({
-  selector: '[ngxMatDatepickerToggleIcon]',
+  selector: '[adMatDatepickerToggleIcon]',
 })
-export class NgxMatDatepickerToggleIcon {}
+export class AdMatDatepickerToggleIcon {}
 
 @Component({
-  selector: 'ngx-mat-datepicker-toggle',
+  selector: 'ad-mat-datepicker-toggle',
   templateUrl: 'datepicker-toggle.html',
   styleUrls: ['datepicker-toggle.scss'],
   host: {
@@ -42,16 +42,16 @@ export class NgxMatDatepickerToggleIcon {}
     // it so that the input doesn't get focused automatically by the form field (See #21836).
     '(click)': '_open($event)',
   },
-  exportAs: 'ngxMatDatepickerToggle',
+  exportAs: 'adMatDatepickerToggle',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatIconButton],
 })
-export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnDestroy {
+export class AdMatDatepickerToggle<D> implements AfterContentInit, OnDestroy {
   private _stateChanges = Subscription.EMPTY;
 
   /** Datepicker instance that the button will toggle. */
-  readonly datepicker = input<NgxMatDatepickerPanel<NgxMatDatepickerControl<any>, D>>(undefined, {
+  readonly datepicker = input<AdMatDatepickerPanel<AdMatDatepickerControl<any>, D>>(undefined, {
     alias: 'for',
   });
 
@@ -83,7 +83,7 @@ export class NgxMatDatepickerToggle<D> implements AfterContentInit, OnDestroy {
   _button = viewChild<MatButton>('button');
 
   constructor(
-    public _intl: NgxMatDatepickerIntl,
+    public _intl: AdMatDatepickerIntl,
     private _changeDetectorRef: ChangeDetectorRef,
     @Attribute('tabindex') defaultTabIndex: string,
   ) {

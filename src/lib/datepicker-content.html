@@ -10,7 +10,7 @@
   [class.mat-datepicker-content-container-with-actions]="_actionsPortal"
   [class.mat-datepicker-content-container-with-time]="!datepicker._hideTime"
 >
-  <ngx-mat-calendar
+  <ad-mat-calendar
     [id]="datepicker.id"
     [ngClass]="datepicker.panelClass"
     [startAt]="datepicker.startAt"
@@ -39,7 +39,7 @@
         class="time-container"
         [class.disable-seconds]="!datepicker._showSeconds"
       >
-        <ngx-mat-timepicker
+        <ad-mat-timepicker
           [showSpinners]="datepicker._showSpinners"
           [showSeconds]="datepicker._showSeconds"
           [disabled]="datepicker._disabled || !_modelTime"

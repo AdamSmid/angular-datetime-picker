@@ -16,9 +16,9 @@ import { MatCalendar, MatCalendarView } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { NgxMatTimepickerComponent } from './timepicker.component';
+import { AdMatTimepickerComponent } from './timepicker.component';
 
-export interface NgxMatDatetimePickerContentData<D> {
+export interface AdMatDatetimePickerContentData<D> {
   datepicker: any; // Reference to the main datepicker component
   color?: string;
   touchUi?: boolean;
@@ -60,7 +60,7 @@ export interface NgxMatDatetimePickerContentData<D> {
 
       @if (!data.hideTime) {
         <div class="mat-datetime-picker-time">
-          <ngx-mat-timepicker
+          <ad-mat-timepicker
             #timepicker
             [ngModel]="selectedDateTime()"
             (ngModelChange)="onTimeChanged($event)"
@@ -73,7 +73,7 @@ export interface NgxMatDatetimePickerContentData<D> {
             [enableMeridian]="data.enableMeridian ?? false"
             [defaultTime]="data.defaultTime"
             [disabled]="data.disabled">
-          </ngx-mat-timepicker>
+          </ad-mat-timepicker>
         </div>
       }
 
@@ -99,18 +99,18 @@ export interface NgxMatDatetimePickerContentData<D> {
   styleUrls: ['./datetime-picker-content-v2.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  imports: [CommonModule, FormsModule, MatCalendar, MatButtonModule, NgxMatTimepickerComponent],
+  imports: [CommonModule, FormsModule, MatCalendar, MatButtonModule, AdMatTimepickerComponent],
   host: {
     class: 'mat-datetime-picker-content-v2',
     '[class.mat-datetime-picker-content-touch]': 'data.touchUi',
   },
 })
-export class NgxMatDatetimePickerContentV2<D> implements OnInit, OnDestroy {
+export class AdMatDatetimePickerContentV2<D> implements OnInit, OnDestroy {
   @ViewChild('calendar', { static: true }) calendar: MatCalendar<D>;
-  @ViewChild('timepicker', { static: false }) timepicker: NgxMatTimepickerComponent<D>;
+  @ViewChild('timepicker', { static: false }) timepicker: AdMatTimepickerComponent<D>;
 
-  readonly dialogRef = inject(MatDialogRef<NgxMatDatetimePickerContentV2<D>>);
-  readonly data = inject<NgxMatDatetimePickerContentData<D>>(MAT_DIALOG_DATA);
+  readonly dialogRef = inject(MatDialogRef<AdMatDatetimePickerContentV2<D>>);
+  readonly data = inject<AdMatDatetimePickerContentData<D>>(MAT_DIALOG_DATA);
   private readonly _dateAdapter = inject(DateAdapter<D>);
   private readonly _destroyed = new Subject<void>();
 

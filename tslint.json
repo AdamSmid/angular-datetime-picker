@@ -74,13 +74,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "ngxMat",
+      "adMat",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "mat",
+      "ad-mat",
       "kebab-case"
     ]
   }

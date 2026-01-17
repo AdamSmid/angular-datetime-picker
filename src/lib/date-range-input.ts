@@ -21,28 +21,28 @@ import { DateAdapter, ThemePalette } from '@angular/material/core';
 import { MAT_FORM_FIELD, MatFormFieldControl } from '@angular/material/form-field';
 import { Subject, Subscription, merge } from 'rxjs';
 import {
-  NGX_MAT_DATE_RANGE_INPUT_PARENT,
-  NgxMatDateRangeInputParent,
-  NgxMatEndDate,
-  NgxMatStartDate,
+  AD_MAT_DATE_RANGE_INPUT_PARENT,
+  AdMatDateRangeInputParent,
+  AdMatEndDate,
+  AdMatStartDate,
 } from './date-range-input-parts';
-import { NgxMatDateRangePickerInput } from './date-range-picker';
-import { NgxDateRange, NgxMatDateSelectionModel } from './date-selection-model';
-import { NgxMatDatepickerControl, NgxMatDatepickerPanel } from './datepicker-base';
+import { AdMatDateRangePickerInput } from './date-range-picker';
+import { AdDateRange, AdMatDateSelectionModel } from './date-selection-model';
+import { AdMatDatepickerControl, AdMatDatepickerPanel } from './datepicker-base';
 import { createMissingDateImplError } from './datepicker-errors';
 import {
-  NgxDateFilterFn,
-  _NgxMatFormFieldPartial,
+  AdDateFilterFn,
+  _AdMatFormFieldPartial,
   dateInputsHaveChanged,
 } from './datepicker-input-base';
 
 let nextUniqueId = 0;
 
 @Component({
-  selector: 'ngx-mat-date-range-input',
+  selector: 'ad-mat-date-range-input',
   templateUrl: 'date-range-input.html',
   styleUrls: ['date-range-input.scss'],
-  exportAs: 'ngxMatDateRangeInput',
+  exportAs: 'adMatDateRangeInput',
   host: {
     class: 'mat-date-range-input',
     '[class.mat-date-range-input-hide-placeholders]': '_shouldHidePlaceholders()',
@@ -58,20 +58,20 @@ let nextUniqueId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   providers: [
-    { provide: MatFormFieldControl, useExisting: NgxMatDateRangeInput },
+    { provide: MatFormFieldControl, useExisting: AdMatDateRangeInput },
     {
-      provide: NGX_MAT_DATE_RANGE_INPUT_PARENT,
-      useExisting: NgxMatDateRangeInput,
+      provide: AD_MAT_DATE_RANGE_INPUT_PARENT,
+      useExisting: AdMatDateRangeInput,
     },
   ],
   imports: [CdkMonitorFocus],
 })
-export class NgxMatDateRangeInput<D>
+export class AdMatDateRangeInput<D>
   implements
-    MatFormFieldControl<NgxDateRange<D>>,
-    NgxMatDatepickerControl<D>,
-    NgxMatDateRangeInputParent<D>,
-    NgxMatDateRangePickerInput<D>,
+    MatFormFieldControl<AdDateRange<D>>,
+    AdMatDatepickerControl<D>,
+    AdMatDateRangeInputParent<D>,
+    AdMatDateRangePickerInput<D>,
     AfterContentInit,
     OnChanges,
     OnDestroy
@@ -114,7 +114,7 @@ export class NgxMatDateRangeInput<D>
     return this._rangePicker;
   }
   set rangePicker(
-    rangePicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<D>, NgxDateRange<D>, D>,
+    rangePicker: AdMatDatepickerPanel<AdMatDatepickerControl<D>, AdDateRange<D>, D>,
   ) {
     if (rangePicker) {
       this._model = rangePicker.registerInput(this);
@@ -127,7 +127,7 @@ export class NgxMatDateRangeInput<D>
       this._registerModel(this._model!);
     }
   }
-  private _rangePicker: NgxMatDatepickerPanel<NgxMatDatepickerControl<D>, NgxDateRange<D>, D>;
+  private _rangePicker: AdMatDatepickerPanel<AdMatDatepickerControl<D>, AdDateRange<D>, D>;
 
   /** Whether the input is required. */
   @Input()
@@ -150,7 +150,7 @@ export class NgxMatDateRangeInput<D>
   get dateFilter() {
     return this._dateFilter;
   }
-  set dateFilter(value: NgxDateFilterFn<D>) {
+  set dateFilter(value: AdDateFilterFn<D>) {
     const start = this._startInput;
     const end = this._endInput;
     const wasMatchingStart = start && start._matchesFilter(start.value);
@@ -165,7 +165,7 @@ export class NgxMatDateRangeInput<D>
       end._validatorOnChange();
     }
   }
-  private _dateFilter: NgxDateFilterFn<D>;
+  private _dateFilter: AdDateFilterFn<D>;
 
   /** The minimum valid date. */
   @Input()
@@ -234,7 +234,7 @@ export class NgxMatDateRangeInput<D>
   _ariaDescribedBy: string | null = null;
 
   /** Date selection model currently registered with the input. */
-  private _model: NgxMatDateSelectionModel<NgxDateRange<D>> | undefined;
+  private _model: AdMatDateSelectionModel<AdDateRange<D>> | undefined;
 
   /** Separator text to be shown between the inputs. */
   @Input() separator = '–';
@@ -245,8 +245,8 @@ export class NgxMatDateRangeInput<D>
   /** End of the comparison range that should be shown in the calendar. */
   @Input() comparisonEnd: D | null = null;
 
-  @ContentChild(NgxMatStartDate) _startInput: NgxMatStartDate<D>;
-  @ContentChild(NgxMatEndDate) _endInput: NgxMatEndDate<D>;
+  @ContentChild(AdMatStartDate) _startInput: AdMatStartDate<D>;
+  @ContentChild(AdMatEndDate) _endInput: AdMatEndDate<D>;
   /**
    * Implemented as a part of `MatFormFieldControl`.
    * TODO(crisbeto): change type to `AbstractControlDirective` after #18206 lands.
@@ -264,7 +264,7 @@ export class NgxMatDateRangeInput<D>
     @Optional() private _dateAdapter: DateAdapter<D>,
     @Optional()
     @Inject(MAT_FORM_FIELD)
-    private _formField?: _NgxMatFormFieldPartial,
+    private _formField?: _AdMatFormFieldPartial,
   ) {
     if (!_dateAdapter) {
       throw createMissingDateImplError('DateAdapter');
@@ -421,7 +421,7 @@ export class NgxMatDateRangeInput<D>
   }
 
   /** Registers the current date selection model with the start/end inputs. */
-  private _registerModel(model: NgxMatDateSelectionModel<NgxDateRange<D>>) {
+  private _registerModel(model: AdMatDateSelectionModel<AdDateRange<D>>) {
     if (this._startInput) {
       this._startInput._registerModel(model);
     }

@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 
 /** Datepicker data that requires internationalization. */
 @Injectable({ providedIn: 'root' })
-export class NgxMatDatepickerIntl {
+export class AdMatDatepickerIntl {
   /**
    * Stream that emits whenever the labels here are changed. Use this to notify
    * components if the labels have changed after initialization.

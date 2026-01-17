@@ -61,48 +61,48 @@ import { MatButton } from '@angular/material/button';
 import { DateAdapter, ThemePalette } from '@angular/material/core';
 import { Observable, Subject, Subscription, merge } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-import { NgxMatCalendar, NgxMatCalendarView } from './calendar';
-import { NgxMatCalendarCellClassFunction, NgxMatCalendarUserEvent } from './calendar-body';
+import { AdMatCalendar, AdMatCalendarView } from './calendar';
+import { AdMatCalendarCellClassFunction, AdMatCalendarUserEvent } from './calendar-body';
 import {
-  NGX_MAT_DATE_RANGE_SELECTION_STRATEGY,
-  NgxMatDateRangeSelectionStrategy,
+  AD_MAT_DATE_RANGE_SELECTION_STRATEGY,
+  AdMatDateRangeSelectionStrategy,
 } from './date-range-selection-strategy';
 import {
-  NgxDateRange,
-  NgxExtractDateTypeFromSelection,
-  NgxMatDateSelectionModel,
+  AdDateRange,
+  AdExtractDateTypeFromSelection,
+  AdMatDateSelectionModel,
 } from './date-selection-model';
-import { ngxMatDatepickerAnimations } from './datepicker-animations';
+import { adMatDatepickerAnimations } from './datepicker-animations';
 import { createMissingDateImplError } from './datepicker-errors';
-import { NgxDateFilterFn } from './datepicker-input-base';
-import { NgxMatDatepickerIntl } from './datepicker-intl';
-import { NgxMatTimepickerComponent } from './timepicker.component';
+import { AdDateFilterFn } from './datepicker-input-base';
+import { AdMatDatepickerIntl } from './datepicker-intl';
+import { AdMatTimepickerComponent } from './timepicker.component';
 import { DEFAULT_STEP } from './utils/date-utils';
 
 /** Used to generate a unique ID for each datepicker instance. */
 let datepickerUid = 0;
 
 /** Injection token that determines the scroll handling while the calendar is open. */
-export const NGX_MAT_DATEPICKER_SCROLL_STRATEGY = new InjectionToken<() => ScrollStrategy>(
-  'ngx-mat-datepicker-scroll-strategy',
+export const AD_MAT_DATEPICKER_SCROLL_STRATEGY = new InjectionToken<() => ScrollStrategy>(
+  'ad-mat-datepicker-scroll-strategy',
 );
 
 /** @docs-private */
-export function NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY(overlay: Overlay): () => ScrollStrategy {
+export function AD_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY(overlay: Overlay): () => ScrollStrategy {
   return () => overlay.scrollStrategies.reposition();
 }
 
 /** Possible positions for the datepicker dropdown along the X axis. */
-export type NgxDatepickerDropdownPositionX = 'start' | 'end';
+export type AdDatepickerDropdownPositionX = 'start' | 'end';
 
 /** Possible positions for the datepicker dropdown along the Y axis. */
-export type NgxDatepickerDropdownPositionY = 'above' | 'below';
+export type AdDatepickerDropdownPositionY = 'above' | 'below';
 
 /** @docs-private */
-export const NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER = {
-  provide: NGX_MAT_DATEPICKER_SCROLL_STRATEGY,
+export const AD_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER = {
+  provide: AD_MAT_DATEPICKER_SCROLL_STRATEGY,
   deps: [Overlay],
-  useFactory: NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY,
+  useFactory: AD_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY,
 };
 
 // Boilerplate for applying mixins to MatDatepickerContent.
@@ -114,7 +114,7 @@ export const NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER = {
  * @docs-private
  */
 @Component({
-  selector: 'ngx-mat-datepicker-content',
+  selector: 'ad-mat-datepicker-content',
   templateUrl: 'datepicker-content.html',
   styleUrls: ['datepicker-content.scss'],
   host: {
@@ -126,34 +126,34 @@ export const NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER = {
     '[class.mat-datepicker-content-touch-with-time]': '!datepicker.hideTime',
   },
   animations: [
-    ngxMatDatepickerAnimations.transformPanel,
-    ngxMatDatepickerAnimations.fadeInCalendar,
+    adMatDatepickerAnimations.transformPanel,
+    adMatDatepickerAnimations.fadeInCalendar,
   ],
-  exportAs: 'ngxMatDatepickerContent',
+  exportAs: 'adMatDatepickerContent',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   inputs: ['color'],
   imports: [
     CdkTrapFocus,
-    NgxMatCalendar,
+    AdMatCalendar,
     NgClass,
-    NgxMatTimepickerComponent,
+    AdMatTimepickerComponent,
     ReactiveFormsModule,
     FormsModule,
     CdkPortalOutlet,
     MatButton,
   ],
 })
-export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
+export class AdMatDatepickerContent<S, D = AdExtractDateTypeFromSelection<S>>
   implements OnInit, AfterViewInit, OnDestroy
 {
   private _subscriptions = new Subscription();
-  private _model: NgxMatDateSelectionModel<S, D>;
+  private _model: AdMatDateSelectionModel<S, D>;
   /** Reference to the internal calendar component. */
-  _calendar = viewChild.required<NgxMatCalendar<D>>(NgxMatCalendar);
+  _calendar = viewChild.required<AdMatCalendar<D>>(AdMatCalendar);
 
   /** Reference to the datepicker that created the overlay. */
-  datepicker: NgxMatDatepickerBase<any, S, D>;
+  datepicker: AdMatDatepickerBase<any, S, D>;
 
   /** Start of the comparison range. */
   comparisonStart: D | null;
@@ -213,12 +213,12 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
-    private _globalModel: NgxMatDateSelectionModel<S, D>,
+    private _globalModel: AdMatDateSelectionModel<S, D>,
     private _dateAdapter: DateAdapter<D>,
     @Optional()
-    @Inject(NGX_MAT_DATE_RANGE_SELECTION_STRATEGY)
-    private _rangeSelectionStrategy: NgxMatDateRangeSelectionStrategy<D>,
-    intl: NgxMatDatepickerIntl,
+    @Inject(AD_MAT_DATE_RANGE_SELECTION_STRATEGY)
+    private _rangeSelectionStrategy: AdMatDateRangeSelectionStrategy<D>,
+    intl: AdMatDatepickerIntl,
   ) {
     this._closeButtonText = intl.closeCalendarLabel;
 
@@ -248,7 +248,7 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
   }
 
   onTimeChanged(selectedDateWithTime: D | null) {
-    const userEvent: NgxMatCalendarUserEvent<D | null> = {
+    const userEvent: AdMatCalendarUserEvent<D | null> = {
       value: selectedDateWithTime,
       event: null,
     };
@@ -256,7 +256,7 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
     this._updateUserSelectionWithCalendarUserEvent(userEvent);
   }
 
-  _handleUserSelection(event: NgxMatCalendarUserEvent<D | null>) {
+  _handleUserSelection(event: AdMatCalendarUserEvent<D | null>) {
     this._updateUserSelectionWithCalendarUserEvent(event);
 
     // Delegate closing the overlay to the actions.
@@ -267,10 +267,10 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
     }
   }
 
-  private _updateUserSelectionWithCalendarUserEvent(event: NgxMatCalendarUserEvent<D | null>) {
+  private _updateUserSelectionWithCalendarUserEvent(event: AdMatCalendarUserEvent<D | null>) {
     const selection = this._model.selection;
     const value = event.value;
-    const isRange = selection instanceof NgxDateRange;
+    const isRange = selection instanceof AdDateRange;
 
     // If we're selecting a range and we have a selection strategy, always pass the value through
     // there. Otherwise don't assign null values to the model, unless we're selecting a range.
@@ -280,7 +280,7 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
     if (isRange && this._rangeSelectionStrategy) {
       const newSelection = this._rangeSelectionStrategy.selectionFinished(
         value,
-        selection as unknown as NgxDateRange<D>,
+        selection as unknown as AdDateRange<D>,
         event.event,
       );
       this._model.updateSelection(newSelection as unknown as S, this);
@@ -295,7 +295,7 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
     }
   }
 
-  _handleUserDragDrop(event: NgxMatCalendarUserEvent<NgxDateRange<D>>) {
+  _handleUserDragDrop(event: AdMatCalendarUserEvent<AdDateRange<D>>) {
     this._model.updateSelection(event.value as unknown as S, this);
   }
 
@@ -314,7 +314,7 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
 
   _getSelected() {
     this._modelTime = this._model.selection as unknown as D;
-    return this._model.selection as unknown as D | NgxDateRange<D> | null;
+    return this._model.selection as unknown as D | AdDateRange<D> | null;
   }
 
   /** Applies the current pending selection to the global model. */
@@ -349,7 +349,7 @@ export class NgxMatDatepickerContent<S, D = NgxExtractDateTypeFromSelection<S>>
 }
 
 /** Form control that can be associated with a datepicker. */
-export interface NgxMatDatepickerControl<D> {
+export interface AdMatDatepickerControl<D> {
   getStartValue(): D | null;
 
   getThemePalette(): ThemePalette;
@@ -357,7 +357,7 @@ export interface NgxMatDatepickerControl<D> {
   min: D | null;
   max: D | null;
   disabled: boolean;
-  dateFilter: NgxDateFilterFn<D>;
+  dateFilter: AdDateFilterFn<D>;
 
   getConnectedOverlayOrigin(): ElementRef;
 
@@ -366,11 +366,11 @@ export interface NgxMatDatepickerControl<D> {
   stateChanges: Observable<void>;
 }
 
-/** A datepicker that can be attached to a {@link NgxMatDatepickerControl}. */
-export interface NgxMatDatepickerPanel<
-  C extends NgxMatDatepickerControl<D>,
+/** A datepicker that can be attached to a {@link AdMatDatepickerControl}. */
+export interface AdMatDatepickerPanel<
+  C extends AdMatDatepickerControl<D>,
   S,
-  D = NgxExtractDateTypeFromSelection<S>,
+  D = AdExtractDateTypeFromSelection<S>,
 > {
   /** Stream that emits whenever the date picker is closed. */
   closedStream: EventEmitter<void>;
@@ -393,17 +393,17 @@ export interface NgxMatDatepickerPanel<
   open(): void;
 
   /** Register an input with the datepicker. */
-  registerInput(input: C): NgxMatDateSelectionModel<S, D>;
+  registerInput(input: C): AdMatDateSelectionModel<S, D>;
 }
 
 /** Base class for a datepicker. */
 @Directive()
-export abstract class NgxMatDatepickerBase<
-    C extends NgxMatDatepickerControl<D>,
+export abstract class AdMatDatepickerBase<
+    C extends AdMatDatepickerControl<D>,
     S,
-    D = NgxExtractDateTypeFromSelection<S>,
+    D = AdExtractDateTypeFromSelection<S>,
   >
-  implements NgxMatDatepickerPanel<C, S, D>, OnDestroy, OnChanges
+  implements AdMatDatepickerPanel<C, S, D>, OnDestroy, OnChanges
 {
   private _scrollStrategy: () => ScrollStrategy;
   private _inputStateChanges = Subscription.EMPTY;
@@ -489,10 +489,10 @@ export abstract class NgxMatDatepickerBase<
   public _disabled: boolean;
 
   /** Preferred position of the datepicker in the X axis. */
-  readonly xPosition = input<NgxDatepickerDropdownPositionX>('start');
+  readonly xPosition = input<AdDatepickerDropdownPositionX>('start');
 
   /** Preferred position of the datepicker in the Y axis. */
-  readonly yPosition = input<NgxDatepickerDropdownPositionY>('below');
+  readonly yPosition = input<AdDatepickerDropdownPositionY>('below');
 
   /**
    * Whether to restore focus to the previously-focused element when the calendar is closed.
@@ -525,10 +525,10 @@ export abstract class NgxMatDatepickerBase<
   /**
    * Emits when the current view changes.
    */
-  readonly viewChanged = output<NgxMatCalendarView>();
+  readonly viewChanged = output<AdMatCalendarView>();
 
   /** Function that can be used to add custom CSS classes to dates. */
-  readonly dateClass = input<NgxMatCalendarCellClassFunction<D>>();
+  readonly dateClass = input<AdMatCalendarCellClassFunction<D>>();
 
   /** Emits when the datepicker has been opened. */
   @Output('opened') readonly openedStream = new EventEmitter<void>();
@@ -672,7 +672,7 @@ export abstract class NgxMatDatepickerBase<
     return this.datepickerInput && this.datepickerInput.max;
   }
 
-  _getDateFilter(): NgxDateFilterFn<D> {
+  _getDateFilter(): AdDateFilterFn<D> {
     return this.datepickerInput && this.datepickerInput.dateFilter;
   }
 
@@ -680,7 +680,7 @@ export abstract class NgxMatDatepickerBase<
   private _overlayRef: OverlayRef | null;
 
   /** Reference to the component instance rendered in the overlay. */
-  private _componentRef: ComponentRef<NgxMatDatepickerContent<S, D>> | null;
+  private _componentRef: ComponentRef<AdMatDatepickerContent<S, D>> | null;
 
   /** The element that was focused before the datepicker was opened. */
   private _focusedElementBeforeOpen: HTMLElement | null = null;
@@ -701,10 +701,10 @@ export abstract class NgxMatDatepickerBase<
     private _overlay: Overlay,
     private _ngZone: NgZone,
     private _viewContainerRef: ViewContainerRef,
-    @Inject(NGX_MAT_DATEPICKER_SCROLL_STRATEGY) scrollStrategy: any,
+    @Inject(AD_MAT_DATEPICKER_SCROLL_STRATEGY) scrollStrategy: any,
     @Optional() private _dateAdapter: DateAdapter<D>,
     @Optional() private _dir: Directionality,
-    private _model: NgxMatDateSelectionModel<S, D>,
+    private _model: AdMatDateSelectionModel<S, D>,
   ) {
     if (!this._dateAdapter) {
       throw createMissingDateImplError('DateAdapter');
@@ -754,7 +754,7 @@ export abstract class NgxMatDatepickerBase<
   }
 
   /** Emits changed view */
-  _viewChanged(view: NgxMatCalendarView): void {
+  _viewChanged(view: AdMatCalendarView): void {
     this.viewChanged.emit(view);
   }
 
@@ -763,7 +763,7 @@ export abstract class NgxMatDatepickerBase<
    * @param input The datepicker input to register with this datepicker.
    * @returns Selection model that the input should hook itself up to.
    */
-  registerInput(input: C): NgxMatDateSelectionModel<S, D> {
+  registerInput(input: C): AdMatDateSelectionModel<S, D> {
     if (this.datepickerInput) {
       throw Error('A MatDatepicker can only be associated with a single input.');
     }
@@ -880,7 +880,7 @@ export abstract class NgxMatDatepickerBase<
   }
 
   /** Forwards relevant values from the datepicker to the datepicker content inside the overlay. */
-  protected _forwardContentValues(instance: NgxMatDatepickerContent<S, D>) {
+  protected _forwardContentValues(instance: AdMatDatepickerContent<S, D>) {
     instance.datepicker = this;
     instance.color = this.color;
     instance._dialogLabelId = this.datepickerInput.getOverlayLabelId();
@@ -892,8 +892,8 @@ export abstract class NgxMatDatepickerBase<
     this._destroyOverlay();
 
     const isDialog = this.touchUi;
-    const portal = new ComponentPortal<NgxMatDatepickerContent<S, D>>(
-      NgxMatDatepickerContent,
+    const portal = new ComponentPortal<AdMatDatepickerContent<S, D>>(
+      AdMatDatepickerContent,
       this._viewContainerRef,
     );
     const overlayRef = (this._overlayRef = this._overlay.create(

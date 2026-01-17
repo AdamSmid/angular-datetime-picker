@@ -25,7 +25,7 @@ npm install --save  @adamsmid/datetime-picker
 
 Add the date provider to your app configuration.
 
-[!IMPORTANT] to prevent the \_ERROR Error: NgxMatDatetimePicker: No provider found for DateAdapter.
+[!IMPORTANT] to prevent the \_ERROR Error: AdMatDatetimePicker: No provider found for DateAdapter.
 You must import one of the following providers at your application root or standalone component:
 provideNativeDateAdapter, provideMomentDateAdapter, provideLuxonDateAdapter, provideDateFnsAdapter,
 or provide a custom implementation.
@@ -46,39 +46,39 @@ On your component, you can use the datepicker as follows:
 
 ```typescript
 import {
-  NgxMatDatepickerActions,
-  NgxMatDatepickerApply,
-  NgxMatDatepickerCancel,
-  NgxMatDatepickerClear,
-  NgxMatDatepickerInput,
-  NgxMatDatetimepicker,
+  AdMatDatepickerActions,
+  AdMatDatepickerApply,
+  AdMatDatepickerCancel,
+  AdMatDatepickerClear,
+  AdMatDatepickerInput,
+  AdMatDatetimepicker,
 } from '@adamsmid/datetime-picker';
 
 @Component({
   selector: 'test',
   imports: [
-    NgxMatDatepickerActions,
-    NgxMatDatepickerActions,
-    NgxMatDatepickerApply,
-    NgxMatDatepickerCancel,
-    NgxMatDatepickerClear,
-    NgxMatDatepickerInput,
-    NgxMatDatetimepicker,
+    AdMatDatepickerActions,
+    AdMatDatepickerActions,
+    AdMatDatepickerApply,
+    AdMatDatepickerCancel,
+    AdMatDatepickerClear,
+    AdMatDatepickerInput,
+    AdMatDatetimepicker,
     ..., // other imports
   ],
   template: `
-    <input matInput [ngxMatDatetimePicker]="event" class="hidden" />
+    <input matInput [adMatDatetimePicker]="event" class="hidden" />
 
     <mat-datetime-picker #event>
-      <ngx-mat-datepicker-actions>
+      <ad-mat-datepicker-actions>
         <div class="flex w-full justify-between">
-          <button mat-button ngxMatDatepickerClear>Clear</button>
+          <button mat-button adMatDatepickerClear>Clear</button>
           <div>
-            <button mat-button ngxMatDatepickerCancel>Cancel</button>
-            <button mat-raised-button color="primary" ngxMatDatepickerApply>Apply</button>
+            <button mat-button adMatDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" adMatDatepickerApply>Apply</button>
           </div>
         </div>
-      </ngx-mat-datepicker-actions>
+      </ad-mat-datepicker-actions>
     </mat-datetime-picker>
   `,
 })
@@ -94,7 +94,7 @@ docs](https://material.angular.io/components/datepicker/api)) ### Datetime Picke
 <mat-form-field>
   <input
     matInput
-    [ngxMatDatetimePicker]="picker"
+    [adMatDatetimePicker]="picker"
     placeholder="Choose a date"
     [formControl]="dateControl"
     [min]="minDate"
@@ -117,22 +117,22 @@ docs](https://material.angular.io/components/datepicker/api)) ### Datetime Picke
 </mat-form-field>
 ```
 
-### Timepicker (ngx-mat-timepicker)
+### Timepicker (ad-mat-timepicker)
 
 ```
-<ngx-mat-timepicker [(ngModel)]="date"></ngx-mat-timepicker>
-<ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled"></ngx-mat-timepicker>
-<ngx-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ngx-mat-timepicker>
-<ngx-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ngx-mat-timepicker>
-<ngx-mat-timepicker [(ngModel)]="date" [showSeconds]="showSeconds"></ngx-mat-timepicker>
-<ngx-mat-timepicker [(ngModel)]="date" [disableMinute]="disableMinute"></ngx-mat-timepicker>
-<ngx-mat-timepicker [(ngModel)]="date" [defaultTime]="defaultTime"></ngx-mat-timepicker>
-<ngx-mat-timepicker [formControl]="formControl"></ngx-mat-timepicker>
+<ad-mat-timepicker [(ngModel)]="date"></ad-mat-timepicker>
+<ad-mat-timepicker [(ngModel)]="date" [disabled]="disabled"></ad-mat-timepicker>
+<ad-mat-timepicker [(ngModel)]="date" [stepHour]="2" [stepMinute]="5" [stepSecond]="10"></ad-mat-timepicker>
+<ad-mat-timepicker [(ngModel)]="date" [showSpinners]="showSpinners"></ad-mat-timepicker>
+<ad-mat-timepicker [(ngModel)]="date" [showSeconds]="showSeconds"></ad-mat-timepicker>
+<ad-mat-timepicker [(ngModel)]="date" [disableMinute]="disableMinute"></ad-mat-timepicker>
+<ad-mat-timepicker [(ngModel)]="date" [defaultTime]="defaultTime"></ad-mat-timepicker>
+<ad-mat-timepicker [formControl]="formControl"></ad-mat-timepicker>
 ```
 
-#### List of @Input of ngx-mat-timepicker
+#### List of @Input of ad-mat-timepicker
 
-_You can use all @Input of ngx-mat-timepicker for mat-datetime-picker_
+_You can use all @Input of ad-mat-timepicker for mat-datetime-picker_
 
 | @Input             | Type         | Default value | Description                                                                                                                                                                  |
 | ------------------ | ------------ | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -184,7 +184,7 @@ const CUSTOM_DATE_FORMATS: MatDateFormats = {
 Creating a custom date adapter module
 
 ```
-export function provideNgxMatCustomDate() {
+export function provideAdMatCustomDate() {
   return makeEnvironmentProviders([
     { provide: DateAdapter, useClass: CustomDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },

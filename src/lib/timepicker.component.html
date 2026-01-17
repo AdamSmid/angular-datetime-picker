@@ -1,6 +1,6 @@
 <form [formGroup]="form">
-  <table class="ngx-mat-timepicker-table">
-    <tbody class="ngx-mat-timepicker-tbody">
+  <table class="ad-mat-timepicker-table">
+    <tbody class="ad-mat-timepicker-tbody">
       @if (showSpinners()) {
         <tr>
           <td>
@@ -66,7 +66,7 @@
             </td>
           }
           @if (enableMeridian()) {
-            <td class="ngx-mat-timepicker-spacer"></td>
+            <td class="ad-mat-timepicker-spacer"></td>
             <td></td>
           }
         </tr>
@@ -86,7 +86,7 @@
               (blur)="change('hour')" />
           </mat-form-field>
         </td>
-        <td class="ngx-mat-timepicker-spacer">&#58;</td>
+        <td class="ad-mat-timepicker-spacer">&#58;</td>
         <td>
           <mat-form-field appearance="fill" [color]="color()">
             <input
@@ -101,7 +101,7 @@
           </mat-form-field>
         </td>
         @if (showSeconds()) {
-          <td class="ngx-mat-timepicker-spacer">&#58;</td>
+          <td class="ad-mat-timepicker-spacer">&#58;</td>
           <td>
             <mat-form-field appearance="fill" [color]="color()">
               <input
@@ -118,9 +118,9 @@
         }
 
         @if (enableMeridian()) {
-          <td class="ngx-mat-timepicker-spacer"></td>
+          <td class="ad-mat-timepicker-spacer"></td>
 
-          <td class="ngx-mat-timepicker-meridian">
+          <td class="ad-mat-timepicker-meridian">
             <button
               mat-button
               (click)="toggleMeridian()"
@@ -200,7 +200,7 @@
           }
 
           @if (enableMeridian()) {
-            <td class="ngx-mat-timepicker-spacer"></td>
+            <td class="ad-mat-timepicker-spacer"></td>
             <td></td>
           }
         </tr>

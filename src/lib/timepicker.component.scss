@@ -1,20 +1,20 @@
 $sizeButtonMeridian: 36px;
 $inputWidth: 24px;
 
-.ngx-mat-timepicker {
+.ad-mat-timepicker {
   form {
 
-    .ngx-mat-timepicker-table {
-      .ngx-mat-timepicker-tbody {
+    .ad-mat-timepicker-table {
+      .ad-mat-timepicker-tbody {
         tr {
           td {
             text-align: center;
 
-            &.ngx-mat-timepicker-spacer {
+            &.ad-mat-timepicker-spacer {
               font-weight: bold;
             }
 
-            &.ngx-mat-timepicker-meridian {
+            &.ad-mat-timepicker-meridian {
               .mdc-button {
                 min-width: 64px;
                 line-height: $sizeButtonMeridian;

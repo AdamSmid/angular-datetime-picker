@@ -42,20 +42,20 @@ export enum MERIDIANS {
 }
 
 @Component({
-  selector: 'ngx-mat-timepicker',
+  selector: 'ad-mat-timepicker',
   templateUrl: './timepicker.component.html',
   styleUrl: './timepicker.component.scss',
   host: {
-    class: 'ngx-mat-timepicker',
+    class: 'ad-mat-timepicker',
   },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NgxMatTimepickerComponent),
+      useExisting: forwardRef(() => AdMatTimepickerComponent),
       multi: true,
     },
   ],
-  exportAs: 'ngxMatTimepicker',
+  exportAs: 'adMatTimepicker',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
@@ -66,7 +66,7 @@ export enum MERIDIANS {
     MatIconModule,
   ],
 })
-export class NgxMatTimepickerComponent<D> implements ControlValueAccessor {
+export class AdMatTimepickerComponent<D> implements ControlValueAccessor {
   private readonly formBuilder = inject(FormBuilder);
   private readonly _dateAdapter = inject(DateAdapter<D>, { optional: true });
 

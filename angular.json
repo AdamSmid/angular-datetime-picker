@@ -8,7 +8,7 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "library",
-      "prefix": "NgxMat",
+      "prefix": "ad-mat",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -30,7 +30,7 @@
   },
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "mat",
+      "prefix": "ad-mat",
       "style": "scss",
       "skipTests": true,
       "standalone": true,
@@ -38,12 +38,12 @@
       "type": "component"
     },
     "@schematics/angular:directive": {
-      "prefix": "ngx-mat",
+      "prefix": "adMat",
       "skipTests": true,
       "type": "directive"
     },
     "@schematics/angular:pipe": {
-      "prefix": "ngx-mat",
+      "prefix": "adMat",
       "skipTests": true,
       "typeSeparator": "."
     },

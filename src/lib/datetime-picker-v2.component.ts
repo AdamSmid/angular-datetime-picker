@@ -13,11 +13,11 @@ import { DateAdapter, ThemePalette } from '@angular/material/core';
 import { MatCalendarView } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject, Subscription } from 'rxjs';
-import { NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER } from './date-selection-model';
-import { NgxMatDatepickerControl } from './datepicker-base';
+import { AD_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER } from './date-selection-model';
+import { AdMatDatepickerControl } from './datepicker-base';
 import { createMissingDateImplError } from './datepicker-errors';
-import { NgxMatDatetimePickerContentV2 } from './datetime-picker-content-v2.component';
-import { NgxMatDatetimePickerInputV2 } from './datetime-picker-input-v2.directive';
+import { AdMatDatetimePickerContentV2 } from './datetime-picker-content-v2.component';
+import { AdMatDatetimePickerInputV2 } from './datetime-picker-input-v2.directive';
 import { DEFAULT_STEP } from './utils/date-utils';
 
 let datepickerUid = 0;
@@ -25,23 +25,23 @@ let datepickerUid = 0;
 @Component({
   selector: 'mat-datetime-picker',
   template: '',
-  exportAs: 'ngxMatDatetimePicker',
+  exportAs: 'adMatDatetimePicker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  providers: [NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER],
+  providers: [AD_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER],
 })
-export class NgxMatDatetimePickerV2<D> implements OnDestroy {
+export class AdMatDatetimePickerV2<D> implements OnDestroy {
   private readonly _dialog = inject(MatDialog);
   private readonly _dateAdapter = inject(DateAdapter<D>, { optional: true });
 
-  private _dialogRef: MatDialogRef<NgxMatDatetimePickerContentV2<D>> | null = null;
+  private _dialogRef: MatDialogRef<AdMatDatetimePickerContentV2<D>> | null = null;
   private _inputStateChanges = Subscription.EMPTY;
 
   /** The id for the datepicker. */
   readonly id = `mat-datetime-picker-${datepickerUid++}`;
 
   /** The input element this datepicker is associated with. */
-  datepickerInput: NgxMatDatepickerControl<D>;
+  datepickerInput: AdMatDatepickerControl<D>;
 
   /** Emits when the datepicker is disabled. */
   readonly stateChanges = new Subject<void>();
@@ -86,7 +86,7 @@ export class NgxMatDatetimePickerV2<D> implements OnDestroy {
   }
 
   /** Register an input with this datepicker. */
-  _registerInput(input: NgxMatDatepickerControl<D>): void {
+  _registerInput(input: AdMatDatepickerControl<D>): void {
     console.log('🔗 Registering input with datepicker:', input.constructor.name);
 
     if (this.datepickerInput) {
@@ -153,7 +153,7 @@ export class NgxMatDatetimePickerV2<D> implements OnDestroy {
   private _openAsDialog(): void {
     console.debug('🚀 Opening datetime picker dialog');
 
-    const panelClasses = ['ngx-mat-datepicker-dialog'];
+    const panelClasses = ['ad-mat-datepicker-dialog'];
     const customPanelClass = this.panelClass();
 
     if (customPanelClass) {
@@ -167,7 +167,7 @@ export class NgxMatDatetimePickerV2<D> implements OnDestroy {
     const initialValue = this.datepickerInput?.getStartValue();
     console.debug('📅 Initial value for dialog:', initialValue);
 
-    this._dialogRef = this._dialog.open(NgxMatDatetimePickerContentV2<D>, {
+    this._dialogRef = this._dialog.open(AdMatDatetimePickerContentV2<D>, {
       panelClass: panelClasses,
       hasBackdrop: true,
       backdropClass: 'cdk-overlay-dark-backdrop',
@@ -201,11 +201,11 @@ export class NgxMatDatetimePickerV2<D> implements OnDestroy {
         console.debug('📝 Input instance:', this.datepickerInput.constructor.name);
 
         // Use the public method to properly update the input
-        if (this.datepickerInput instanceof NgxMatDatetimePickerInputV2) {
-          console.debug('✅ Calling updateValue on NgxMatDatetimePickerInputV2');
+        if (this.datepickerInput instanceof AdMatDatetimePickerInputV2) {
+          console.debug('✅ Calling updateValue on AdMatDatetimePickerInputV2');
           this.datepickerInput.updateValue(result);
         } else {
-          console.debug('❌ Input is not instance of NgxMatDatetimePickerInputV2');
+          console.debug('❌ Input is not instance of AdMatDatetimePickerInputV2');
         }
       } else {
         console.debug('❌ No result or no input available');

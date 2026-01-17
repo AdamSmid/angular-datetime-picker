@@ -12,7 +12,7 @@ import {
  * Animations used by the Material datepicker.
  * @docs-private
  */
-export const ngxMatDatepickerAnimations: {
+export const adMatDatepickerAnimations: {
   readonly transformPanel: AnimationTriggerMetadata;
   readonly fadeInCalendar: AnimationTriggerMetadata;
 } = {

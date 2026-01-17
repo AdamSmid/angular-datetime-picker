@@ -28,9 +28,9 @@ import {
 } from '@angular/material/core';
 import { Subject, Subscription } from 'rxjs';
 import {
-  NgxDateSelectionModelChange,
-  NgxExtractDateTypeFromSelection,
-  NgxMatDateSelectionModel,
+  AdDateSelectionModelChange,
+  AdExtractDateTypeFromSelection,
+  AdMatDateSelectionModel,
 } from './date-selection-model';
 import { createMissingDateImplError } from './datepicker-errors';
 
@@ -39,13 +39,13 @@ import { createMissingDateImplError } from './datepicker-errors';
  * input or change event because the event may have been triggered by the user clicking on the
  * calendar popup. For consistency, we always use MatDatepickerInputEvent instead.
  */
-export class NgxMatDatepickerInputEvent<D, S = unknown> {
+export class AdMatDatepickerInputEvent<D, S = unknown> {
   /** The new value for the target datepicker input. */
   value: D | null;
 
   constructor(
     /** Reference to the datepicker input component that emitted the event. */
-    public target: NgxMatDatepickerInputBase<S, D>,
+    public target: AdMatDatepickerInputBase<S, D>,
     /** Reference to the native input element associated with the datepicker input. */
     public targetElement: HTMLElement,
   ) {
@@ -54,13 +54,13 @@ export class NgxMatDatepickerInputEvent<D, S = unknown> {
 }
 
 /** Function that can be used to filter out dates from a calendar. */
-export type NgxDateFilterFn<D> = (date: D | null) => boolean;
+export type AdDateFilterFn<D> = (date: D | null) => boolean;
 
 /**
  * Partial representation of `MatFormField` that is used for backwards-compatibility
  * between the legacy and non-legacy variants.
  */
-export interface _NgxMatFormFieldPartial {
+export interface _AdMatFormFieldPartial {
   getConnectedOverlayOrigin(): ElementRef;
   getLabelId(): string | null;
   color: ThemePalette;
@@ -72,7 +72,7 @@ export interface _NgxMatFormFieldPartial {
 
 /** Base class for datepicker inputs. */
 @Directive()
-export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSelection<S>>
+export abstract class AdMatDatepickerInputBase<S, D = AdExtractDateTypeFromSelection<S>>
   implements ControlValueAccessor, AfterViewInit, OnChanges, OnDestroy, Validator
 {
   /** Whether the component has been initialized. */
@@ -86,7 +86,7 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
   set value(value: any) {
     this._assignValueProgrammatically(value);
   }
-  protected _model: NgxMatDateSelectionModel<S, D> | undefined;
+  protected _model: AdMatDateSelectionModel<S, D> | undefined;
 
   /** Whether the datepicker-input is disabled. */
   @Input()
@@ -116,10 +116,10 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
   private _disabled: boolean;
 
   /** Emits when a `change` event is fired on this `<input>`. */
-  readonly dateChange = output<NgxMatDatepickerInputEvent<D, S>>();
+  readonly dateChange = output<AdMatDatepickerInputEvent<D, S>>();
 
   /** Emits when an `input` event is fired on this `<input>`. */
-  readonly dateInput = output<NgxMatDatepickerInputEvent<D, S>>();
+  readonly dateInput = output<AdMatDatepickerInputEvent<D, S>>();
 
   /** Emits when the internal state has changed */
   readonly stateChanges = new Subject<void>();
@@ -189,10 +189,10 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
   abstract _getMaxDate(): D | null;
 
   /** Gets the date filter function. Used for validation. */
-  protected abstract _getDateFilter(): NgxDateFilterFn<D> | undefined;
+  protected abstract _getDateFilter(): AdDateFilterFn<D> | undefined;
 
   /** Registers a date selection model with the input. */
-  _registerModel(model: NgxMatDateSelectionModel<S, D>): void {
+  _registerModel(model: AdMatDateSelectionModel<S, D>): void {
     this._model = model;
     this._valueChangesSubscription.unsubscribe();
 
@@ -207,8 +207,8 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
         this._cvaOnChange(value);
         this._onTouched();
         this._formatValue(value);
-        this.dateInput.emit(new NgxMatDatepickerInputEvent(this, this._elementRef.nativeElement));
-        this.dateChange.emit(new NgxMatDatepickerInputEvent(this, this._elementRef.nativeElement));
+        this.dateInput.emit(new AdMatDatepickerInputEvent(this, this._elementRef.nativeElement));
+        this.dateChange.emit(new AdMatDatepickerInputEvent(this, this._elementRef.nativeElement));
       }
     });
   }
@@ -226,7 +226,7 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
   protected abstract _validator: ValidatorFn | null;
 
   /** Predicate that determines whether the input should handle a particular change event. */
-  protected abstract _shouldHandleChangeEvent(event: NgxDateSelectionModelChange<S>): boolean;
+  protected abstract _shouldHandleChangeEvent(event: AdDateSelectionModelChange<S>): boolean;
 
   /** Whether the last value set on the input was valid. */
   protected _lastValueValid = false;
@@ -342,12 +342,12 @@ export abstract class NgxMatDatepickerInputBase<S, D = NgxExtractDateTypeFromSel
 
     if (hasChanged) {
       this._assignValue(date);
-      this.dateInput.emit(new NgxMatDatepickerInputEvent(this, this._elementRef.nativeElement));
+      this.dateInput.emit(new AdMatDatepickerInputEvent(this, this._elementRef.nativeElement));
     }
   }
 
   _onChange() {
-    this.dateChange.emit(new NgxMatDatepickerInputEvent(this, this._elementRef.nativeElement));
+    this.dateChange.emit(new AdMatDatepickerInputEvent(this, this._elementRef.nativeElement));
   }
 
   /** Handles blur events on the input. */

@@ -8,7 +8,7 @@ export * from './datepicker';
 export * from './datepicker-actions';
 export * from './datepicker-base';
 export * from './datepicker-input';
-export { NgxMatDatepickerInputEvent } from './datepicker-input-base';
+export { AdMatDatepickerInputEvent } from './datepicker-input-base';
 export * from './datepicker-toggle';
 export * from './month-view';
 export * from './multi-year-view';

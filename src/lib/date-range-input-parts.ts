@@ -30,21 +30,21 @@ import {
   MatDateFormats,
 } from '@angular/material/core';
 import { _computeAriaAccessibleName } from './aria-accessible-name';
-import { NgxDateRange, NgxDateSelectionModelChange } from './date-selection-model';
-import { NgxDateFilterFn, NgxMatDatepickerInputBase } from './datepicker-input-base';
+import { AdDateRange, AdDateSelectionModelChange } from './date-selection-model';
+import { AdDateFilterFn, AdMatDatepickerInputBase } from './datepicker-input-base';
 
 /** Parent component that should be wrapped around `MatStartDate` and `MatEndDate`. */
-export interface NgxMatDateRangeInputParent<D> {
+export interface AdMatDateRangeInputParent<D> {
   id: string;
   min: D | null;
   max: D | null;
-  dateFilter: NgxDateFilterFn<D>;
+  dateFilter: AdDateFilterFn<D>;
   rangePicker: {
     opened: boolean;
     id: string;
   };
-  _startInput: NgxMatDateRangeInputPartBase<D>;
-  _endInput: NgxMatDateRangeInputPartBase<D>;
+  _startInput: AdMatDateRangeInputPartBase<D>;
+  _endInput: AdMatDateRangeInputPartBase<D>;
   _groupDisabled: boolean;
   _handleChildValueChange(): void;
   _openDatepicker(): void;
@@ -54,16 +54,16 @@ export interface NgxMatDateRangeInputParent<D> {
  * Used to provide the date range input wrapper component
  * to the parts without circular dependencies.
  */
-export const NGX_MAT_DATE_RANGE_INPUT_PARENT = new InjectionToken<
-  NgxMatDateRangeInputParent<unknown>
->('NGX_MAT_DATE_RANGE_INPUT_PARENT');
+export const AD_MAT_DATE_RANGE_INPUT_PARENT = new InjectionToken<
+  AdMatDateRangeInputParent<unknown>
+>('AD_MAT_DATE_RANGE_INPUT_PARENT');
 
 /**
  * Base class for the individual inputs that can be projected inside a `mat-date-range-input`.
  */
 @Directive()
-abstract class NgxMatDateRangeInputPartBase<D>
-  extends NgxMatDatepickerInputBase<NgxDateRange<D>>
+abstract class AdMatDateRangeInputPartBase<D>
+  extends AdMatDatepickerInputBase<AdDateRange<D>>
   implements OnInit, DoCheck
 {
   @Input() errorStateMatcher: ErrorStateMatcher;
@@ -78,13 +78,13 @@ abstract class NgxMatDateRangeInputPartBase<D>
 
   protected abstract override _validator: ValidatorFn | null;
   protected abstract override _assignValueToModel(value: D | null): void;
-  protected abstract override _getValueFromModel(modelValue: NgxDateRange<D>): D | null;
+  protected abstract override _getValueFromModel(modelValue: AdDateRange<D>): D | null;
 
   protected readonly _dir = inject(Directionality, { optional: true });
 
   constructor(
-    @Inject(NGX_MAT_DATE_RANGE_INPUT_PARENT)
-    public _rangeInput: NgxMatDateRangeInputParent<D>,
+    @Inject(AD_MAT_DATE_RANGE_INPUT_PARENT)
+    public _rangeInput: AdMatDateRangeInputParent<D>,
     public override _elementRef: ElementRef<HTMLInputElement>,
     public _defaultErrorStateMatcher: ErrorStateMatcher,
     private _injector: Injector,
@@ -186,7 +186,7 @@ abstract class NgxMatDateRangeInputPartBase<D>
 
   protected _shouldHandleChangeEvent({
     source,
-  }: NgxDateSelectionModelChange<NgxDateRange<D>>): boolean {
+  }: AdDateSelectionModelChange<AdDateRange<D>>): boolean {
     return source !== this._rangeInput._startInput && source !== this._rangeInput._endInput;
   }
 
@@ -196,7 +196,7 @@ abstract class NgxMatDateRangeInputPartBase<D>
       this === this._rangeInput._startInput
         ? this._rangeInput._endInput
         : this._rangeInput._startInput
-    ) as NgxMatDateRangeInputPartBase<D> | undefined;
+    ) as AdMatDateRangeInputPartBase<D> | undefined;
     opposite?._validatorOnChange();
   }
 
@@ -208,7 +208,7 @@ abstract class NgxMatDateRangeInputPartBase<D>
 
 /** Input for entering the start date in a `mat-date-range-input`. */
 @Directive({
-  selector: 'input[ngxMatStartDate]',
+  selector: 'input[adMatStartDate]',
   host: {
     class: 'mat-start-date mat-date-range-input-inner',
     '[disabled]': 'disabled',
@@ -223,15 +223,15 @@ abstract class NgxMatDateRangeInputPartBase<D>
     type: 'text',
   },
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: NgxMatStartDate, multi: true },
-    { provide: NG_VALIDATORS, useExisting: NgxMatStartDate, multi: true },
+    { provide: NG_VALUE_ACCESSOR, useExisting: AdMatStartDate, multi: true },
+    { provide: NG_VALIDATORS, useExisting: AdMatStartDate, multi: true },
   ],
   // These need to be specified explicitly, because some tooling doesn't
   // seem to pick them up from the base class. See #20932.
   outputs: ['dateChange', 'dateInput'],
   inputs: ['errorStateMatcher'],
 })
-export class NgxMatStartDate<D> extends NgxMatDateRangeInputPartBase<D> {
+export class AdMatStartDate<D> extends AdMatDateRangeInputPartBase<D> {
   /** Validator that checks that the start date isn't after the end date. */
   private _startValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const start = this._dateAdapter.getValidDateOrNull(
@@ -244,8 +244,8 @@ export class NgxMatStartDate<D> extends NgxMatDateRangeInputPartBase<D> {
   };
 
   constructor(
-    @Inject(NGX_MAT_DATE_RANGE_INPUT_PARENT)
-    rangeInput: NgxMatDateRangeInputParent<D>,
+    @Inject(AD_MAT_DATE_RANGE_INPUT_PARENT)
+    rangeInput: AdMatDateRangeInputParent<D>,
     elementRef: ElementRef<HTMLInputElement>,
     defaultErrorStateMatcher: ErrorStateMatcher,
     injector: Injector,
@@ -268,12 +268,12 @@ export class NgxMatStartDate<D> extends NgxMatDateRangeInputPartBase<D> {
 
   protected _validator = Validators.compose([...super._getValidators(), this._startValidator]);
 
-  protected _getValueFromModel(modelValue: NgxDateRange<D>) {
+  protected _getValueFromModel(modelValue: AdDateRange<D>) {
     return modelValue.start;
   }
 
   protected override _shouldHandleChangeEvent(
-    change: NgxDateSelectionModelChange<NgxDateRange<D>>,
+    change: AdDateSelectionModelChange<AdDateRange<D>>,
   ): boolean {
     if (!super._shouldHandleChangeEvent(change)) {
       return false;
@@ -287,7 +287,7 @@ export class NgxMatStartDate<D> extends NgxMatDateRangeInputPartBase<D> {
 
   protected _assignValueToModel(value: D | null) {
     if (this._model) {
-      const range = new NgxDateRange(value, this._model.selection.end);
+      const range = new AdDateRange(value, this._model.selection.end);
       this._model.updateSelection(range, this);
     }
   }
@@ -322,7 +322,7 @@ export class NgxMatStartDate<D> extends NgxMatDateRangeInputPartBase<D> {
 
 /** Input for entering the end date in a `mat-date-range-input`. */
 @Directive({
-  selector: 'input[ngxMatEndDate]',
+  selector: 'input[adMatEndDate]',
   host: {
     class: 'mat-end-date mat-date-range-input-inner',
     '[disabled]': 'disabled',
@@ -337,15 +337,15 @@ export class NgxMatStartDate<D> extends NgxMatDateRangeInputPartBase<D> {
     type: 'text',
   },
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: NgxMatEndDate, multi: true },
-    { provide: NG_VALIDATORS, useExisting: NgxMatEndDate, multi: true },
+    { provide: NG_VALUE_ACCESSOR, useExisting: AdMatEndDate, multi: true },
+    { provide: NG_VALIDATORS, useExisting: AdMatEndDate, multi: true },
   ],
   // These need to be specified explicitly, because some tooling doesn't
   // seem to pick them up from the base class. See #20932.
   outputs: ['dateChange', 'dateInput'],
   inputs: ['errorStateMatcher'],
 })
-export class NgxMatEndDate<D> extends NgxMatDateRangeInputPartBase<D> {
+export class AdMatEndDate<D> extends AdMatDateRangeInputPartBase<D> {
   /** Validator that checks that the end date isn't before the start date. */
   private _endValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const end = this._dateAdapter.getValidDateOrNull(this._dateAdapter.deserialize(control.value));
@@ -356,8 +356,8 @@ export class NgxMatEndDate<D> extends NgxMatDateRangeInputPartBase<D> {
   };
 
   constructor(
-    @Inject(NGX_MAT_DATE_RANGE_INPUT_PARENT)
-    rangeInput: NgxMatDateRangeInputParent<D>,
+    @Inject(AD_MAT_DATE_RANGE_INPUT_PARENT)
+    rangeInput: AdMatDateRangeInputParent<D>,
     elementRef: ElementRef<HTMLInputElement>,
     defaultErrorStateMatcher: ErrorStateMatcher,
     injector: Injector,
@@ -380,12 +380,12 @@ export class NgxMatEndDate<D> extends NgxMatDateRangeInputPartBase<D> {
 
   protected _validator = Validators.compose([...super._getValidators(), this._endValidator]);
 
-  protected _getValueFromModel(modelValue: NgxDateRange<D>) {
+  protected _getValueFromModel(modelValue: AdDateRange<D>) {
     return modelValue.end;
   }
 
   protected override _shouldHandleChangeEvent(
-    change: NgxDateSelectionModelChange<NgxDateRange<D>>,
+    change: AdDateSelectionModelChange<AdDateRange<D>>,
   ): boolean {
     if (!super._shouldHandleChangeEvent(change)) {
       return false;
@@ -399,7 +399,7 @@ export class NgxMatEndDate<D> extends NgxMatDateRangeInputPartBase<D> {
 
   protected _assignValueToModel(value: D | null) {
     if (this._model) {
-      const range = new NgxDateRange(this._model.selection.start, value);
+      const range = new AdDateRange(this._model.selection.start, value);
       this._model.updateSelection(range, this);
     }
   }

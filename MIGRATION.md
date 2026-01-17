@@ -1,8 +1,8 @@
-# NgxMatDatetimePicker V2 - Migration to Native Angular Material
+# AdMatDatetimePicker V2 - Migration to Native Angular Material
 
 ## Description
 
-NgxMatDatetimePickerV2 is a new implementation of the datetime-picker component that uses native
+AdMatDatetimePickerV2 is a new implementation of the datetime-picker component that uses native
 Angular Material components instead of custom implementations. This new version simplifies the code,
 improves maintainability, and leverages official Angular Material improvements and updates.
 
@@ -26,13 +26,13 @@ improves maintainability, and leverages official Angular Material improvements a
 ### 1. Import the Module
 
 ```typescript
-import { NgxMatDatetimePickerV2, NgxMatDatetimePickerInputV2 } from '@adamsmid/datetime-picker';
+import { AdMatDatetimePickerV2, AdMatDatetimePickerInputV2 } from '@adamsmid/datetime-picker';
 
 @NgModule({
   imports: [
     // ... other imports
-    NgxMatDatetimePickerV2,
-    NgxMatDatetimePickerInputV2,
+    AdMatDatetimePickerV2,
+    AdMatDatetimePickerInputV2,
   ],
 })
 export class AppModule {}
@@ -43,7 +43,7 @@ export class AppModule {}
 ```html
 <mat-form-field>
   <mat-label>Date and Time</mat-label>
-  <input matInput [ngxMatDatetimePicker]="picker" [(ngModel)]="selectedDateTime" />
+  <input matInput [adMatDatetimePicker]="picker" [(ngModel)]="selectedDateTime" />
   <mat-datetime-picker #picker></mat-datetime-picker>
 </mat-form-field>
 ```
@@ -58,7 +58,7 @@ datetimeControl = new FormControl(new Date());
 ```html
 <mat-form-field>
   <mat-label>Date and Time</mat-label>
-  <input matInput [formControl]="datetimeControl" [ngxMatDatetimePicker]="picker" />
+  <input matInput [formControl]="datetimeControl" [adMatDatetimePicker]="picker" />
   <mat-datetime-picker #picker></mat-datetime-picker>
 </mat-form-field>
 ```
@@ -90,7 +90,7 @@ datetimeControl = new FormControl(new Date());
 ```html
 <input
   matInput
-  [ngxMatDatetimePicker]="picker"
+  [adMatDatetimePicker]="picker"
   [min]="minDate"              <!-- Minimum date -->
   [max]="maxDate"              <!-- Maximum date -->
   [dateFilter]="myFilter"      <!-- Filter function -->
@@ -104,7 +104,7 @@ datetimeControl = new FormControl(new Date());
 ```html
 <mat-form-field>
   <mat-label>Date</mat-label>
-  <input matInput [ngxMatDatetimePicker]="datePicker" />
+  <input matInput [adMatDatetimePicker]="datePicker" />
   <mat-datetime-picker #datePicker [hideTime]="true"> </mat-datetime-picker>
 </mat-form-field>
 ```
@@ -129,7 +129,7 @@ dateFilter = (date: Date): boolean => {
   <input
     matInput
     [formControl]="datetimeControl"
-    [ngxMatDatetimePicker]="picker"
+    [adMatDatetimePicker]="picker"
     [dateFilter]="dateFilter" />
   <mat-datetime-picker #picker></mat-datetime-picker>
   <mat-error *ngIf="datetimeControl.hasError('required')"> Date is required </mat-error>
@@ -141,7 +141,7 @@ dateFilter = (date: Date): boolean => {
 ```html
 <mat-form-field>
   <mat-label>Full Time</mat-label>
-  <input matInput [ngxMatDatetimePicker]="timePicker" />
+  <input matInput [adMatDatetimePicker]="timePicker" />
   <mat-datetime-picker
     #timePicker
     [showSeconds]="true"
@@ -158,7 +158,7 @@ dateFilter = (date: Date): boolean => {
 | V1 (Previous)             | V2 (New)                  | Notes             |
 | ------------------------- | ------------------------- | ----------------- |
 | `mat-datetime-picker` | `mat-datetime-picker` | New selector      |
-| `ngxMatDatetimePicker`    | `ngxMatDatetimePicker`    | New directive     |
+| `adMatDatetimePicker`    | `adMatDatetimePicker`    | New directive     |
 | Custom implementation     | Native Angular Material   | Greater stability |
 
 ### Migration Steps
@@ -167,21 +167,21 @@ dateFilter = (date: Date): boolean => {
 
    ```typescript
    // Before
-   import { NgxMatDatetimePickerModule } from '@adamsmid/datetime-picker';
+   import { AdMatDatetimePickerModule } from '@adamsmid/datetime-picker';
 
    // After
-   import { NgxMatDatetimePickerModule } from '@adamsmid/datetime-picker';
+   import { AdMatDatetimePickerModule } from '@adamsmid/datetime-picker';
    ```
 
 2. **Update templates**:
 
    ```html
    <!-- Before -->
-   <input [ngxMatDatetimePicker]="picker" />
+   <input [adMatDatetimePicker]="picker" />
    <mat-datetime-picker #picker></mat-datetime-picker>
 
    <!-- After -->
-   <input [ngxMatDatetimePicker]="picker" />
+   <input [adMatDatetimePicker]="picker" />
    <mat-datetime-picker #picker></mat-datetime-picker>
    ```
 
@@ -189,7 +189,7 @@ dateFilter = (date: Date): boolean => {
 
 ## API Reference
 
-### NgxMatDatetimePicker
+### AdMatDatetimePicker
 
 | Property         | Type                                | Default     | Description             |
 | ---------------- | ----------------------------------- | ----------- | ----------------------- |
@@ -220,7 +220,7 @@ dateFilter = (date: Date): boolean => {
 Make sure you have correctly imported the V2 module:
 
 ```typescript
-import { NgxMatDatetimePickerModule } from '@adamsmid/datetime-picker';
+import { AdMatDatetimePickerModule } from '@adamsmid/datetime-picker';
 ```
 
 ### Styles not applied

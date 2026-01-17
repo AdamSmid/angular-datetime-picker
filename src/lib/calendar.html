@@ -3,7 +3,7 @@
 <div class="mat-calendar-content" cdkMonitorSubtreeFocus tabindex="-1">
   @switch (currentView()) {
     @case ('month') {
-      <ngx-mat-month-view
+      <ad-mat-month-view
         [(activeDate)]="activeDate"
         [selected]="selected"
         [dateFilter]="dateFilter()"
@@ -20,7 +20,7 @@
         [activeDrag]="_activeDrag" />
     }
     @case ('year') {
-      <ngx-mat-year-view
+      <ad-mat-year-view
         [(activeDate)]="activeDate"
         [selected]="selected"
         [dateFilter]="dateFilter()"
@@ -31,7 +31,7 @@
         (selectedChange)="_goToDateInView($event, 'month')" />
     }
     @case ('multi-year') {
-      <ngx-mat-multi-year-view
+      <ad-mat-multi-year-view
         [(activeDate)]="activeDate"
         [selected]="selected"
         [dateFilter]="dateFilter()"

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER } from './date-selection-model';
+import { AD_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER } from './date-selection-model';
 import {
-  NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
-  NgxMatDatepickerBase,
-  NgxMatDatepickerControl,
+  AD_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
+  AdMatDatepickerBase,
+  AdMatDatepickerControl,
 } from './datepicker-base';
 
 // TODO(mmalerba): We use a component instead of a directive here so the user can use implicit
@@ -13,17 +13,17 @@ import {
 @Component({
   selector: 'mat-datetime-picker',
   template: '',
-  exportAs: 'ngxMatDatetimePicker',
+  exportAs: 'adMatDatetimePicker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   providers: [
-    NGX_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER,
-    NGX_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
-    { provide: NgxMatDatepickerBase, useExisting: NgxMatDatetimepicker },
+    AD_MAT_SINGLE_DATE_SELECTION_MODEL_PROVIDER,
+    AD_MAT_DATEPICKER_SCROLL_STRATEGY_FACTORY_PROVIDER,
+    { provide: AdMatDatepickerBase, useExisting: AdMatDatetimepicker },
   ],
 })
-export class NgxMatDatetimepicker<D> extends NgxMatDatepickerBase<
-  NgxMatDatepickerControl<D>,
+export class AdMatDatetimepicker<D> extends AdMatDatepickerBase<
+  AdMatDatepickerControl<D>,
   D | null,
   D
 > {}
