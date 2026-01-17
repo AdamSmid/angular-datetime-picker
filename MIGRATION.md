@@ -26,7 +26,7 @@ improves maintainability, and leverages official Angular Material improvements a
 ### 1. Import the Module
 
 ```typescript
-import { NgxMatDatetimePickerV2, NgxMatDatetimePickerInputV2 } from '@workbox/datetime-picker';
+import { NgxMatDatetimePickerV2, NgxMatDatetimePickerInputV2 } from '@adamsmid/datetime-picker';
 
 @NgModule({
   imports: [
@@ -167,10 +167,10 @@ dateFilter = (date: Date): boolean => {
 
    ```typescript
    // Before
-   import { NgxMatDatetimePickerModule } from '@workbox/datetime-picker';
+   import { NgxMatDatetimePickerModule } from '@adamsmid/datetime-picker';
 
    // After
-   import { NgxMatDatetimePickerModule } from '@workbox/datetime-picker';
+   import { NgxMatDatetimePickerModule } from '@adamsmid/datetime-picker';
    ```
 
 2. **Update templates**:
@@ -220,7 +220,7 @@ dateFilter = (date: Date): boolean => {
 Make sure you have correctly imported the V2 module:
 
 ```typescript
-import { NgxMatDatetimePickerModule } from '@workbox/datetime-picker';
+import { NgxMatDatetimePickerModule } from '@adamsmid/datetime-picker';
 ```
 
 ### Styles not applied

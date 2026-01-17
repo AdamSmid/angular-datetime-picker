@@ -10,7 +10,7 @@
 
 Choose the version corresponding to your Angular version:
 
-| Angular | @workbox/datetime-picker          |
+| Angular | @adamsmid/datetime-picker        |
 | ------- | ------------------------------- |
 | 20      | 20.x+                           |
 
@@ -18,7 +18,7 @@ Choose the version corresponding to your Angular version:
 ## Getting started
 
 ```
-npm install --save  @workbox/datetime-picker
+npm install --save  @adamsmid/datetime-picker
 ```
 
 ## Setup
@@ -52,7 +52,7 @@ import {
   NgxMatDatepickerClear,
   NgxMatDatepickerInput,
   NgxMatDatetimepicker,
-} from '@workbox/datetime-picker';
+} from '@adamsmid/datetime-picker';
 
 @Component({
   selector: 'test',

@@ -23,11 +23,11 @@
       "node"
     ],
     "paths": {
-      "@workbox/datetime-picker": [
-        "dist/@workbox/datetime-picker"
+      "@adamsmid/datetime-picker": [
+        "dist/@adamsmid/datetime-picker"
       ],
-      "@workbox/datetime-picker/*": [
-        "dist/@workbox/datetime-picker/*"
+      "@adamsmid/datetime-picker/*": [
+        "dist/@adamsmid/datetime-picker/*"
       ]
     },
     "useDefineForClassFields": false,
