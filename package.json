@@ -1,6 +1,6 @@
 {
   "name": "@adamsmid/datetime-picker",
-  "version": "20.0.0",
+  "version": "21.0.0",
   "description": "Angular Material Datetime Picker",
   "author": "HO Hong Quan && updated by Adam Smid <adam.smid@workbox.cz>",
   "repository": {
